@@ -3,6 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startButton.addEventListener('click', () => {
         // 隣のフォルダの「キャラクター選択画面」へ移動
-        window.location.href = '../teacher_select/index.html';
+        window.location.href = '../teacher_select/select.html';
     });
 });
