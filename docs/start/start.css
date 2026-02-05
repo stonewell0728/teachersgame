@@ -1,24 +1,45 @@
-/* ベースの背景（学校の廊下っぽい色や暗めの色） */
+@charset "UTF-8";
+
+/* --- 乙女ゲーム風テーマカラー設定 --- */
+:root {
+    --otome-pink-bg: #fff0f5;       /* 背景の薄いピンク */
+    --otome-gold: #d4af37;          /* ゴールド */
+    --otome-accent-pink: #e91e63;   /* アクセントの濃いピンク */
+    --otome-deep-red: #c2185b;      /* ボタンの影などに使う濃い赤 */
+    --otome-text: #5a2d3f;          /* テキスト色（上品な赤褐色） */
+    /* 読み込んだWebフォント、またはシステム標準の明朝体 */
+    --serif-font: 'Noto Serif JP', 'YuMincho', 'Hiragino Mincho ProN', serif;
+}
+
+/* ベースの背景 */
 body {
     margin: 0;
     padding: 0;
-    background-color: #2c3e50;
+    /* 画面中央から外側への柔らかなピンクのグラデーション */
+    background: radial-gradient(ellipse at center, #ffffff 0%, var(--otome-pink-bg) 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    /* フォントを明朝体に変更 */
+    font-family: var(--serif-font);
+    color: var(--otome-text);
     overflow: hidden;
 }
 
-/* ゲームの枠（4:3 または 16:9 で固定すると作りやすい） */
+/* ゲームの枠を豪華な額縁風にする */
 #game-container {
     width: 800px;
     height: 450px;
-    background-color: #34495e;
-    border: 5px solid #ecf0f1;
-    position: relative;
-    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    position: relative; /* 子要素の絶対配置の基準点 */
+    /* ゴールドの二重線 */
+    border: 8px double var(--otome-gold);
+    border-radius: 20px;
+    /* 内側と外側に光るような影をつける */
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4), inset 0 0 50px rgba(255, 255, 255, 0.8);
+    /* 背景を少し半透明にして、bodyのグラデーションを透かす */
+    background-color: rgba(255, 255, 255, 0.7);
+    overflow: hidden;
 }
 
 /* 画面全体の共通設定 */
@@ -30,49 +51,104 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    position: relative; /* 先生画像を配置するために必要 */
 }
 
-/* タイトルアニメーション */
+/* タイトル装飾 */
 .game-title {
-    font-size: 64px;
-    color: #f1c40f;
-    text-shadow: 4px 4px 0px #d35400;
+    font-size: 60px;
+    color: var(--otome-accent-pink);
+    /* 白い縁取りと、ゴールドの光沢感のある影 */
+    text-shadow: 3px 3px 0 #fff, 0 0 15px rgba(212, 175, 55, 0.6);
     margin: 0;
-    transform: rotate(-2deg);
-    animation: title-wobble 2s infinite ease-in-out;
-}
-
-@keyframes title-wobble {
-    0%, 100% { transform: rotate(-2deg) scale(1); }
-    50% { transform: rotate(2deg) scale(1.05); }
+    margin-top: -30px; /* 少し上に調整 */
+    z-index: 10; /* 最前面へ */
+    /* ポップなアニメーションは削除し、上品な静止画にする */
 }
 
 .game-subtitle {
-    color: #ecf0f1;
-    font-size: 20px;
-    margin-bottom: 40px;
+    color: var(--otome-text);
+    font-size: 22px;
+    margin-bottom: 50px;
+    font-style: italic;
+    z-index: 10;
+    position: relative;
 }
 
-/* スタートボタン */
+/* サブタイトルの左右にキラキラマークをつける */
+.game-subtitle::before,
+.game-subtitle::after {
+    content: "✦";
+    color: var(--otome-gold);
+    margin: 0 10px;
+    font-size: 1.2em;
+}
+
+/* --- 先生画像の配置（重要） --- */
+/* 元のHTML構造のまま左右に配置するため、絶対配置を使います */
+.side-teacher {
+    position: absolute;
+    bottom: 0;
+    height: 90%; /* 画面下から90%の高さ */
+    width: auto;
+    z-index: 5; /* 背景より前、ボタンより後ろ */
+    /* キャラクターを少し発光させる */
+    filter: drop-shadow(0 0 15px rgba(255,255,255, 0.9));
+    pointer-events: none; /* 画像がボタンの邪魔をしないようにする */
+}
+
+.side-teacher img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+/* 左の先生の位置調整 */
+.left-teacher {
+    left: -50px; /* 少し画面外にはみ出させて迫力を出す */
+}
+
+/* 右の先生の位置調整 */
+.right-teacher {
+    right: -50px; /* 少し画面外にはみ出させる */
+    /* 必要に応じて反転させる場合はコメントアウトを解除 */
+    /* transform: scaleX(-1); */
+}
+
+
+/* --- スタートボタン装飾 --- */
 .btn-start {
-    padding: 20px 60px;
-    font-size: 28px;
-    font-weight: bold;
+    /* サイズと形 */
+    padding: 15px 70px;
+    font-size: 26px;
+    font-family: var(--serif-font);
+    border-radius: 50px; /* 優雅な楕円形 */
+    
+    /* 色とグラデーション */
     color: white;
-    background-color: #e74c3c;
-    border: none;
-    border-bottom: 6px solid #c0392b;
-    border-radius: 10px;
+    background: linear-gradient(to bottom, var(--otome-accent-pink), var(--otome-deep-red));
+    /* ゴールドの枠線 */
+    border: 3px solid var(--otome-gold);
+    /* 立体感を出す影 */
+    box-shadow: 0 6px 0 #8c1142, 0 10px 20px rgba(233, 30, 99, 0.4);
+    
     cursor: pointer;
-    transition: 0.1s;
+    position: relative;
+    z-index: 10; /* 先生より手前に表示 */
+    transition: all 0.3s ease;
 }
 
+/* ホバー時の動き */
 .btn-start:hover {
-    background-color: #ff5e4d;
-    transform: translateY(-2px);
+    background: linear-gradient(to bottom, #ff4081, var(--otome-accent-pink));
+    transform: translateY(-3px); /* 少し浮き上がる */
+    box-shadow: 0 8px 0 #8c1142, 0 15px 25px rgba(233, 30, 99, 0.5);
+    /* カーソルを合わせると枠が光る */
+    border-color: #ffe082;
 }
 
+/* クリック時の動き */
 .btn-start:active {
-    transform: translateY(4px);
-    border-bottom: 2px solid #c0392b;
+    transform: translateY(3px); /* 押し込まれる */
+    box-shadow: 0 2px 0 #8c1142, 0 5px 10px rgba(233, 30, 99, 0.4);
 }
