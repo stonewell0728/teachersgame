@@ -24,54 +24,62 @@ body {
 #game-container {
     width: 800px;
     height: 450px;
+    position: relative; /* 子要素の基準点にする */
     background-color: rgba(255, 255, 255, 0.7);
     border: 8px double var(--otome-gold);
     border-radius: 20px;
-    position: relative;
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* flexを一度解除して、絶対配置で管理します */
+    display: block; 
     overflow: hidden;
+    margin: 0 auto;
 }
 
-/* 先生の立ち絵（画面右端に配置） */
+/* --- 先生の画像（背景として右下に固定） --- */
 .side-teacher {
     position: absolute;
-    right: -20px;
+    right: 0;
     bottom: 0;
-    width: 300px;
-    height: 100%;
+    width: 320px; /* 先生の横幅 */
+    height: 95%;
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: bottom;
-    z-index: 1;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+    background-position: bottom right;
+    z-index: 1; /* 背面に配置 */
     opacity: 0.8;
+    pointer-events: none; /* ボタンのクリックを邪魔しないようにする */
 }
 
+/* --- 中央のコンテンツ（ここを強制的に真ん中へ） --- */
 .screen {
-    width: 100%;
-    z-index: 2; /* 先生より前に表示 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 完全に真ん中に固定する魔法のコード */
+    width: 500px; /* コンテンツの幅を固定 */
+    z-index: 10; /* 先生の画像より手前に表示 */
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 .result-title {
     font-size: 38px;
-    color: var(--otome-accent-pink);
+    color: var(--otome-accent-pink); /* ここでピンクを指定 */
     margin: 0 0 15px 0;
-    text-shadow: 1px 1px 2px white;
+    text-shadow: 1px 1px 2px white, 0 0 8px rgba(233, 30, 99, 0.3);
+    z-index: 10;
 }
 
+/* 枠をもう少し整理 */
 .result-card {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px 40px;
-    border-radius: 15px;
+    width: 90%; /* screenの幅に対しての割合 */
+    background: rgba(255, 255, 255, 0.95);
     border: 2px solid var(--otome-gold);
+    border-radius: 15px;
+    padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-sizing: border-box; /* パディングを含めた幅計算にする */
 }
 
 .score-label {
@@ -153,8 +161,11 @@ body {
 #still-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 画面いっぱいに画像を広げる */
-    animation: still-zoom 10s linear infinite alternate; /* ゆっくりズームする演出 */
+    /* 'cover' から 'contain' に変更。
+       これで画像全体が枠内に収まるようになります（余白は黒くなります） */
+    object-fit: contain;
+    /* アニメーションは維持しますが、動きを小さくします（下の設定へ） */
+    animation: still-zoom 10s linear infinite alternate;
 }
 
 /* スチル表示時のフラッシュ演出 */
@@ -210,7 +221,8 @@ body {
     animation: fadeIn 1s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+@keyframes still-zoom {
+    from { transform: scale(1.0); }
+    /* 1.1倍だと大きすぎるので、ほんの少し（1.03倍）だけ動かすように変更 */
+    to { transform: scale(1.03); }
 }
