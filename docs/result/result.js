@@ -36,6 +36,23 @@ function evaluate(id, score) {
     let msg = "";
 
     // ランクの閾値設定
+    function evaluate(id, score) {
+    const rankEl = document.getElementById('rank-badge');
+    const commentEl = document.getElementById('teacher-comment');
+    const stillOverlay = document.getElementById('still-overlay');
+    const stillImage = document.getElementById('still-image');
+    
+    let rank = "";
+    let msg = "";
+
+    // 1. スチル画像のリスト（各先生の特別な一枚を用意してください）
+    const stillImages = {
+        '1': '../images/still_shima.png',
+        '2': '../images/still_kohi.png',
+        '3': '../images/still_shiki.png',
+        '4': '../images/still_tsubo.png'
+    };
+
     if (score >= 50) {
         rank = "評価：運命のパートナー (Sランク)";
         const messages = {
@@ -45,6 +62,19 @@ function evaluate(id, score) {
             '4': "「やるじゃん！今夜はお祝いに、二人でどこか行かない？」"
         };
         msg = messages[id];
+
+        // --- 🌟 スチル表示ロジック ---
+        if (stillImages[id]) {
+            stillImage.src = stillImages[id];
+            stillOverlay.classList.add('fade-in');
+            
+            // スチルをクリックしたら閉じる設定
+            stillOverlay.onclick = () => {
+                stillOverlay.classList.remove('fade-in');
+                stillOverlay.style.display = 'none';
+            };
+        }
+        // -------------------------
     } else if (score >= 20) {
         rank = "評価：気になる教え子 (Aランク)";
         const messages = {
