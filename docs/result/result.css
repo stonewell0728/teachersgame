@@ -1,111 +1,137 @@
-/* ベース設定 (他の画面と統一) */
+@charset "UTF-8";
+
+:root {
+    --otome-pink-bg: #fff0f5;
+    --otome-gold: #d4af37;
+    --otome-accent-pink: #e91e63;
+    --otome-text: #5a2d3f;
+    --serif-font: 'Noto Serif JP', serif;
+}
+
 body {
     margin: 0;
     padding: 0;
-    background-color: #2c3e50;
+    background: radial-gradient(circle, #ffffff 0%, var(--otome-pink-bg) 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    color: white;
+    font-family: var(--serif-font);
+    color: var(--otome-text);
     overflow: hidden;
 }
 
 #game-container {
     width: 800px;
     height: 450px;
-    background-color: #34495e;
-    border: 5px solid #ecf0f1;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 8px double var(--otome-gold);
+    border-radius: 20px;
     position: relative;
-    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+}
+
+/* 先生の立ち絵（画面右端に配置） */
+.side-teacher {
+    position: absolute;
+    right: -20px;
+    bottom: 0;
+    width: 300px;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    z-index: 1;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+    opacity: 0.8;
 }
 
 .screen {
     width: 100%;
-    text-align: center;
+    z-index: 2; /* 先生より前に表示 */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* リザルト固有のデザイン */
 .result-title {
-    font-size: 42px;
-    color: #f1c40f;
-    margin: 0 0 20px 0;
-    text-shadow: 2px 2px 0px #d35400;
+    font-size: 38px;
+    color: var(--otome-accent-pink);
+    margin: 0 0 15px 0;
+    text-shadow: 1px 1px 2px white;
 }
 
 .result-card {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px 60px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px 40px;
     border-radius: 15px;
-    border: 3px solid #ecf0f1;
-    margin-bottom: 30px;
-    width: 50%;
+    border: 2px solid var(--otome-gold);
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 .score-label {
-    font-size: 18px;
+    font-size: 16px;
     margin: 0;
-    color: #bdc3c7;
+    color: var(--otome-text);
 }
 
 .score-value {
-    font-size: 56px;
+    font-size: 48px;
     font-weight: bold;
-    margin: 10px 0;
-    color: #fff;
+    margin: 5px 0;
+    color: var(--otome-accent-pink);
 }
 
 .rank-badge {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #fff;
-    color: #2c3e50;
-    margin-top: 10px;
+    color: var(--otome-gold);
+    border-top: 1px solid var(--otome-gold);
+    padding-top: 5px;
 }
 
-/* ボタンエリア */
-.button-area {
-    display: flex;
-    gap: 20px;
+/* メッセージウィンドウ */
+.comment-window {
+    width: 70%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 3px solid var(--otome-gold);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.btn-common {
-    padding: 15px 30px;
+#teacher-comment {
     font-size: 18px;
-    font-weight: bold;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* 乙女ボタン共通 */
+.otome-btn {
+    padding: 12px 30px;
+    font-size: 18px;
+    font-family: var(--serif-font);
     color: white;
-    border: none;
-    border-radius: 8px;
+    background: linear-gradient(to bottom, var(--otome-accent-pink), #c2185b);
+    border: 2px solid var(--otome-gold);
+    border-radius: 50px;
     cursor: pointer;
+    box-shadow: 0 4px 0 #8c1142;
     transition: 0.2s;
-    border-bottom: 4px solid rgba(0,0,0,0.2);
 }
 
-.btn-common:hover {
+.otome-btn:hover {
     transform: translateY(-2px);
-    opacity: 0.9;
+    box-shadow: 0 6px 0 #8c1142;
 }
 
-.btn-common:active {
-    transform: translateY(2px);
-    border-bottom: 1px solid rgba(0,0,0,0.2);
-}
-
-/* リトライボタン（緑） */
-.btn-retry {
-    background-color: #27ae60;
-}
-
-/* タイトルへ戻るボタン（青） */
 .btn-title {
-    background-color: #2980b9;
+    background: linear-gradient(to bottom, var(--otome-gold), #b38f00);
+    box-shadow: 0 4px 0 #806600;
 }
