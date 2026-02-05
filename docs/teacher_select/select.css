@@ -65,3 +65,8 @@ body {
 }
 
 .btn-confirm:disabled { background-color: #7f8c8d; cursor: not-allowed; }
+
+/* 先生名を中央揃えにする11:53 0J03001 */
+p.teacher-name {
+    text-align: center;
+}
