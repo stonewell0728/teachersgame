@@ -1,0 +1,111 @@
+/* ベース設定 (他の画面と統一) */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #2c3e50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+#game-container {
+    width: 800px;
+    height: 450px;
+    background-color: #34495e;
+    border: 5px solid #ecf0f1;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.screen {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* リザルト固有のデザイン */
+.result-title {
+    font-size: 42px;
+    color: #f1c40f;
+    margin: 0 0 20px 0;
+    text-shadow: 2px 2px 0px #d35400;
+}
+
+.result-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px 60px;
+    border-radius: 15px;
+    border: 3px solid #ecf0f1;
+    margin-bottom: 30px;
+    width: 50%;
+}
+
+.score-label {
+    font-size: 18px;
+    margin: 0;
+    color: #bdc3c7;
+}
+
+.score-value {
+    font-size: 56px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #fff;
+}
+
+.rank-badge {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #2c3e50;
+    margin-top: 10px;
+}
+
+/* ボタンエリア */
+.button-area {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-common {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-bottom: 4px solid rgba(0,0,0,0.2);
+}
+
+.btn-common:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.btn-common:active {
+    transform: translateY(2px);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+/* リトライボタン（緑） */
+.btn-retry {
+    background-color: #27ae60;
+}
+
+/* タイトルへ戻るボタン（青） */
+.btn-title {
+    background-color: #2980b9;
+}
