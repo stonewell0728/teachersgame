@@ -19,8 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     confirmBtn.addEventListener('click', () => {
-        // 次は「走る画面」のフォルダへ
-        // window.location.href = '../game-screen/index.html';
-        alert("次はゲーム本編（走る画面）へ進みます！");
+        // 隣のフォルダの「走る画面」へ移動
+        window.location.href = '../run/test.html';
     });
 });
