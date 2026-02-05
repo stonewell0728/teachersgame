@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>先生ダッシュ！ - Loading</title>
+    <meta http-equiv="refresh" content="1;URL=./start-screen/index.html">
+    <style>
+        body {
+            margin: 0;
+            background-color: #fff0f5; /* 乙女ピンク */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'serif';
+            color: #d4af37; /* ゴールド */
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #e91e63; /* ピンク */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader"></div>
+    <p>運命の出会いを読み込み中...</p>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "./start/index.html";
+        }, 1000);
+    </script>
+</body>
+</html>
