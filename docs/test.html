@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Jump & Slide - Scale Edition</title>
+    <style>
+        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #212121; color: rgb(0, 0, 0); font-family: sans-serif; overflow: hidden; touch-action: none; }
+        #game-container { position: relative; width: 800px; height: 400px; background: #ffffff; border-bottom: 5px solid #444; overflow: hidden; }
+        
+        /* プレイヤーの基本スタイル */
+        #player { 
+            position: absolute; left: 50px; bottom: 0; 
+            width: 80px; height: 80px; 
+            background-image: url('../images/kohi_touka.png'); /* あなたの画像URL */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            transition: transform 0.1s, height 0.1s;
+            transform-origin: bottom; /* 足元を軸に縮小させる */
+        }
+
+        /* スライディング：画像自体を縦に50%縮小 */
+        #player.sliding { 
+            height: 50px; 
+            transform: scaleY(0.7); 
+            filter: brightness(1.2); /* 少し色を変えて効果を強調 */
+        }
+
+        /* 障害物 */
+        .obstacle { position: absolute; right: -50px; width: 30px; border-radius: 4px; }
+        .obs-low { bottom: 0; height: 60px; background-color: #ff4757; }
+        .obs-high { bottom: 60px; height: 100px; background-color: #54a0ff; }
+
+        #ui { position: absolute; top: 10px; left: 10px; z-index: 10; }
+        #msg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="ui">Score: <span id="score">0</span></div>
+    <div id="player"></div>
+    <div id="msg">クリック長押しでスライディング<br>離すとジャンプ！</div>
+</div>
+
+<script>
+    const player = document.getElementById('player');
+    const scoreEl = document.getElementById('score');
+    const msg = document.getElementById('msg');
+    const container = document.getElementById('game-container');
+
+    let isPlaying = false;
+    let score = 0;
+    let gameSpeed = 6;
+    let yVelocity = 0;
+    let gravity = 0.8;
+    let isJumping = false;
+    let obstacles = [];
+    let timer = 0;
+    let pressStartTime = 0;
+
+    // 操作イベント
+    window.addEventListener('mousedown', () => {
+        if (!isPlaying) { startGame(); return; }
+        pressStartTime = Date.now();
+        player.classList.add('sliding'); // 押した瞬間に縮む
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (!isPlaying) return;
+        const duration = Date.now() - pressStartTime;
+        player.classList.remove('sliding'); // 離すと戻る
+        
+        // 短く押して離した時だけジャンプ
+        if (duration < 200 && !isJumping) {
+            yVelocity = -15;
+            isJumping = true;
+        }
+    });
+
+    function startGame() {
+        isPlaying = true;
+        score = 0;
+        gameSpeed = 6;
+        obstacles.forEach(o => o.el.remove());
+        obstacles = [];
+        msg.style.display = 'none';
+        update();
+    }
+
+    function update() {
+        if (!isPlaying) return;
+
+        // 物理演算
+        yVelocity += gravity;
+        let yPos = parseFloat(player.style.bottom || 0) - yVelocity;
+        
+        if (yPos <= 0) {
+            yPos = 0;
+            yVelocity = 0;
+            isJumping = false;
+        }
+        player.style.bottom = yPos + 'px';
+
+        // 障害物生成
+        timer++;
+        if (timer > Math.max(35, 90 - gameSpeed * 3)) {
+            createObstacle();
+            timer = 0;
+        }
+
+        // 移動と判定
+        obstacles.forEach((obs, i) => {
+            obs.x -= gameSpeed;
+            obs.el.style.left = obs.x + 'px';
+
+            const pRect = player.getBoundingClientRect();
+            const oRect = obs.el.getBoundingClientRect();
+
+            // 判定（縮小中のpRectをそのまま使用）
+            if (pRect.left < oRect.right && pRect.right > oRect.left &&
+                pRect.top < oRect.bottom && pRect.bottom > oRect.top) {
+                gameOver();
+            }
+
+            if (obs.x < -50) {
+                obs.el.remove();
+                obstacles.splice(i, 1);
+                score++;
+                scoreEl.innerText = score;
+                gameSpeed += 0.08;
+            }
+        });
+
+        requestAnimationFrame(update);
+    }
+
+    function createObstacle() {
+        const type = Math.random() > 0.4 ? 'low' : 'high';
+        const el = document.createElement('div');
+        el.className = `obstacle obs-${type}`;
+        container.appendChild(el);
+        obstacles.push({ x: 600, el: el });
+    }
+
+    function gameOver() {
+        isPlaying = false;
+        msg.style.display = 'block';
+        msg.innerHTML = `GAME OVER<br>Score: ${score}<br>Click to Retry`;
+        player.classList.remove('sliding');
+    }
+</script>
+</body>
+</html>
