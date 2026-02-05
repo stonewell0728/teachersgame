@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結果発表 - 走れ、先生</title>
+    <link rel="stylesheet" href="result.css">
+</head>
+<body>
+
+    <div id="game-container">
+        <div class="screen">
+            <h1 class="result-title">本日の通知表</h1>
+            
+            <div class="result-card">
+                <p class="score-label">獲得スコア</p>
+                <p class="score-value"><span id="final-score">0</span> 点</p>
+                
+                <div id="rank-badge" class="rank-badge">
+                    評価中...
+                </div>
+            </div>
+
+            <div class="button-area">
+                <button id="retry-button" class="btn-common btn-retry">もう一度走る</button>
+                <button id="title-button" class="btn-common btn-title">タイトルへ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="result.js"></script>
+</body>
+</html>
