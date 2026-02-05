@@ -121,15 +121,6 @@ function createObstacle() {
 
 function gameOver() {
     isPlaying = false;
-    msg.style.display = 'block';
-    // 乙女ゲーム風の敗北メッセージ
-    msg.innerHTML = `
-        <div class="msg-content">
-            <span style="color: var(--otome-accent-pink); font-weight:bold;">きゃああっ！</span><br>
-            先生との距離: ${score}メートル<br>
-            「まだ、あきらめないで…！」<br>
-            <button class="otome-btn" onclick="location.reload()">もう一度走る</button><br>
-            <button class="otome-btn" style="background:var(--otome-gold); margin-top:10px;" onclick="location.href='../teacher_select/index.html'">キャラを選び直す</button>
-        </div>
-    `;
+    localStorage.setItem('gameScore', score);
+    window.location.href = '../result/result.html'; 
 }
