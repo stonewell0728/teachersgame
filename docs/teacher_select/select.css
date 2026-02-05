@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+    background-color: #2c3e50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: sans-serif;
+    color: white;
+}
+
+#game-container {
+    width: 800px;
+    height: 450px;
+    background-color: #34495e;
+    border: 5px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.select-title { font-size: 32px; color: #f1c40f; margin-bottom: 20px; }
+
+.teacher-container { display: flex; gap: 15px; margin-bottom: 20px; }
+
+.teacher-card {
+    cursor: pointer;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    border: 3px solid transparent;
+    transition: 0.2s;
+}
+
+.teacher-card.selected {
+    border-color: #f1c40f;
+    background: rgba(241, 196, 15, 0.2);
+    transform: scale(1.05);
+}
+
+.teacher-img { width: 80px; height: 80px; border-radius: 50%; background: #ccc; }
+
+.bubble {
+    width: 70%;
+    height: 50px;
+    background: white;
+    color: #333;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-confirm {
+    padding: 10px 40px;
+    font-size: 20px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-confirm:disabled { background-color: #7f8c8d; cursor: not-allowed; }
