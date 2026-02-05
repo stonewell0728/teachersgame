@@ -14,19 +14,30 @@ let obstacles = [];
 let timer = 0;
 let pressStartTime = 0;
 
-// --- 選択画面からのキャラ画像読み込み ---
+// --- 選択画面からのキャラ読み込み ---
 function loadCharacter() {
-    const savedImg = localStorage.getItem('selectedTeacherImg');
-    if (savedImg) {
-        player.style.backgroundImage = `url('${savedImg}')`;
-        player.style.backgroundColor = 'transparent'; // 画像がある時は背景色を消す
+    // 選択画面で保存したIDまたは画像パスを取得
+    const teacherId = localStorage.getItem('selectedTeacher');
+    
+    // IDに合わせて画像を紐付け（パスは自身の環境に合わせてください）
+    const images = {
+        '1': '../../images/shima_touka.png',
+        '2': '../../images/kohi_touka.png',
+        '3': '../../images/shiki_touka.png',
+        '4': '../../images/tsubo_good.png'
+    };
+
+    if (teacherId && images[teacherId]) {
+        player.style.backgroundImage = `url('${images[teacherId]}')`;
+    } else {
+        // 万が一選ばれていない時のデフォルト
+        player.style.backgroundColor = '#ffb7c5';
     }
 }
 
-// ページ読み込み時に実行
 loadCharacter();
 
-// 操作イベント
+// 操作
 window.addEventListener('mousedown', () => {
     if (!isPlaying) { startGame(); return; }
     pressStartTime = Date.now();
@@ -38,7 +49,6 @@ window.addEventListener('mouseup', () => {
     const duration = Date.now() - pressStartTime;
     player.classList.remove('sliding');
     
-    // 短く押して離した時だけジャンプ
     if (duration < 200 && !isJumping) {
         yVelocity = jumpPower;
         isJumping = true;
@@ -59,7 +69,6 @@ function startGame() {
 function update() {
     if (!isPlaying) return;
 
-    // 物理演算
     yVelocity += gravity;
     let yPos = parseFloat(player.style.bottom || 0) - yVelocity;
     
@@ -70,14 +79,12 @@ function update() {
     }
     player.style.bottom = yPos + 'px';
 
-    // 障害物生成
     timer++;
     if (timer > Math.max(35, 100 - gameSpeed * 3)) {
         createObstacle();
         timer = 0;
     }
 
-    // 移動と判定
     obstacles.forEach((obs, i) => {
         obs.x -= gameSpeed;
         obs.el.style.left = obs.x + 'px';
@@ -85,13 +92,11 @@ function update() {
         const pRect = player.getBoundingClientRect();
         const oRect = obs.el.getBoundingClientRect();
 
-        // 判定
         if (pRect.left < oRect.right && pRect.right > oRect.left &&
             pRect.top < oRect.bottom && pRect.bottom > oRect.top) {
             gameOver();
         }
 
-        // 画面外処理
         if (obs.x < -100) {
             obs.el.remove();
             obstacles.splice(i, 1);
@@ -115,6 +120,14 @@ function createObstacle() {
 function gameOver() {
     isPlaying = false;
     msg.style.display = 'block';
-    msg.innerHTML = `GAME OVER<br>Score: ${score}<br>クリックでリトライ<br><br><button onclick="location.href='index.html'" style="cursor:pointer">キャラを選び直す</button>`;
-    player.classList.remove('sliding');
+    // 乙女ゲーム風の敗北メッセージ
+    msg.innerHTML = `
+        <div class="msg-content">
+            <span style="color: var(--otome-accent-pink); font-weight:bold;">きゃああっ！</span><br>
+            先生との距離: ${score}メートル<br>
+            「まだ、あきらめないで…！」<br>
+            <button class="otome-btn" onclick="location.reload()">もう一度走る</button><br>
+            <button class="otome-btn" style="background:var(--otome-gold); margin-top:10px;" onclick="location.href='../teacher_select/index.html'">キャラを選び直す</button>
+        </div>
+    `;
 }
