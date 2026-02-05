@@ -25,18 +25,12 @@ body {
     position: relative; 
     width: 800px; 
     height: 400px; 
-<<<<<<< HEAD
-    background: #ffffff; 
-    /* background-image: url('../images/1.png'); */
-    border-bottom: 8px solid #888; 
-=======
     background-color: white;
     background-image: url('../images/1.png'); /* 学校の背景画像 */
     background-size: cover;
     background-position: center;
     border: 8px double var(--otome-gold); /* ゴールドの二重線 */
     border-radius: 20px;
->>>>>>> 7f4c4f9a0e64ca061c9bae770e7129367c519a96
     overflow: hidden; 
     box-shadow: 0 10px 50px rgba(212, 175, 55, 0.3);
 }
