@@ -16,21 +16,23 @@ let pressStartTime = 0;
 
 // --- 選択画面からのキャラ読み込み ---
 function loadCharacter() {
-    // 選択画面で保存したIDまたは画像パスを取得
+    // 保存した名前「selectedTeacher」で読み込む
     const teacherId = localStorage.getItem('selectedTeacher');
     
-    // IDに合わせて画像を紐付け（パスは自身の環境に合わせてください）
+    // パスを「../images/」に修正（フォルダ階層に合わせる）
     const images = {
-        '1': '../../images/shima_touka.png',
-        '2': '../../images/kohi_touka.png',
-        '3': '../../images/shiki_touka.png',
-        '4': '../../images/tsubo_good.png'
+        '1': '../images/shima_touka.png',
+        '2': '../images/kohi_touka.png',
+        '3': '../images/shiki_touka.png',
+        '4': '../images/tsubo_good.png'
     };
 
     if (teacherId && images[teacherId]) {
+        // 画像を適用
         player.style.backgroundImage = `url('${images[teacherId]}')`;
+        // 背景色を透明にする（乙女ゲーム風なら必須！）
+        player.style.backgroundColor = 'transparent'; 
     } else {
-        // 万が一選ばれていない時のデフォルト
         player.style.backgroundColor = '#ffb7c5';
     }
 }

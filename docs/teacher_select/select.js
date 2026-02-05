@@ -5,22 +5,20 @@ let selectedImg = "";
 
 cards.forEach(card => {
     card.addEventListener('click', () => {
-        // 全カードから選択クラスを外す
         cards.forEach(c => c.classList.remove('selected'));
-        // クリックしたカードを選択状態にする
         card.classList.add('selected');
         
-        // データの取得
         const name = card.querySelector('.teacher-name').innerText;
         const comment = card.getAttribute('data-comment');
-        selectedImg = card.querySelector('.teacher-img').getAttribute('src');
         
-        // UIの更新
+        // 1. ここで「data-id」を取得する
+        const teacherId = card.getAttribute('data-id'); 
+        
         bubble.innerText = `${name}：${comment}`;
         confirmBtn.disabled = false;
         
-        // 【重要】ブラウザに保存
-        localStorage.setItem('selectedTeacherImg', selectedImg);
+        // 2. 「selectedTeacher」という名前でIDを保存する
+        localStorage.setItem('selectedTeacher', teacherId);
     });
 });
 
