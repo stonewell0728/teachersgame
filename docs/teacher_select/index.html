@@ -2,34 +2,39 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>キャラ選択 - 先生ダッシュ！</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="select.css">
 </head>
 <body>
     <div id="game-container">
-        <h2 class="select-title">どの先生にする？</h2>
+        <h2 class="select-title">どの先生と走る？</h2>
         
         <div class="teacher-container">
-            <div class="teacher-card" data-id="1" data-comment="「全力投球で走るぞ！」">
-                <img src="../../images/shima_touka.png" alt="志摩先生" class="teacher-img">
+            <div class="teacher-card" data-id="1" data-comment="「全力投球で走るぞ！俺についてこい！」">
+                <div class="img-frame"><img src="../../images/shima_touka.png" alt="志摩先生" class="teacher-img"></div>
                 <p class="teacher-name">志摩先生</p>
             </div>
-            <div class="teacher-card" data-id="2" data-comment="「算数よりは簡単かな？」">
-                <img src="../../images/kohi_touka.png" alt="小平先生" class="teacher-img">
+            <div class="teacher-card" data-id="2" data-comment="「算数よりは簡単かな？君とならね。」">
+                <div class="img-frame"><img src="../../images/kohi_touka.png" alt="小平先生" class="teacher-img"></div>
                 <p class="teacher-name">小平先生</p>
             </div>
-            <div class="teacher-card" data-id="3" data-comment="「最後まであきらめるな！」">
-                <img src="../../images/shiki_touka.png" alt="式先生" class="teacher-img">
+            <div class="teacher-card" data-id="3" data-comment="「最後まであきらめるな！私が支えてやる。」">
+                <div class="img-frame"><img src="../../images/shiki_touka.png" alt="式先生" class="teacher-img"></div>
                 <p class="teacher-name">式先生</p>
             </div>
-            <div class="teacher-card" data-id="4" data-comment="「職員室まで競争だ！」">
-                <img src="../../images/tsubo_good.png" alt="坪内先生" class="teacher-img">
+            <div class="teacher-card" data-id="4" data-comment="「職員室まで競争だ！負けたら放課後居残りだぞ？」">
+                <div class="img-frame"><img src="../../images/tsubo_good.png" alt="坪内先生" class="teacher-img"></div>
                 <p class="teacher-name">坪内先生</p>
             </div>
         </div>
 
-        <div id="comment-bubble" class="bubble">先生を選んでね！</div>
-        <button id="confirm-button" class="btn-confirm" disabled>決定！</button>
+        <div class="message-window">
+            <div id="comment-bubble" class="bubble">先生を選んでね</div>
+        </div>
+
+        <button id="confirm-button" class="btn-confirm" disabled>この先生に決める</button>
     </div>
     <script src="select.js"></script>
 </body>
