@@ -89,14 +89,14 @@ body {
 .obs-low { 
     bottom: 0; 
     width: 40px;
-    height: 60px; 
+    height: 80px; 
     background-color: #ffb7c5; /* パステルピンクの跳び箱 */
 }
 
 .obs-high { 
-    bottom: 120px; 
-    width: 50px;
-    height: 40px; 
+    bottom: 80px; 
+    width: 40px;
+    height: 120px; 
     background-color: #a2d2ff; /* パステルブルーの机 */
 }
 
